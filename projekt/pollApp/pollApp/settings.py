@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'poll',
+    'channels',
+    'rest_framework'
 ]
+
+ASGI_APPLICATION = "pollApp.asgi.application"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
