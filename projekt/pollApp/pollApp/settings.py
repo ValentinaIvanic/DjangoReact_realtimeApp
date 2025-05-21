@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'poll',
-    'landingPage'
+    'landingPage',
     # 'channels',
-    # 'rest_framework'
+    'rest_framework',
 ]
 
 ASGI_APPLICATION = "pollApp.asgi.application"
