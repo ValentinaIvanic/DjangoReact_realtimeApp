@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     'landingPage',
     # 'channels',
     'rest_framework',
+    'corsheaders',
+
 ]
+
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173']
 
 ASGI_APPLICATION = "pollApp.asgi.application"
 
@@ -54,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'pollApp.urls'
