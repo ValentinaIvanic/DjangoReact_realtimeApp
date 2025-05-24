@@ -1,16 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react"
+import { Route, Routes} from "react-router-dom"
+import NavBar from "./components/NavBar";
+import Home from "./pages/Home";
+import Polls from "./pages/Polls"
+import AddPoll from "./pages/AddPoll";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <div className="bg-red-500 text-white p-10 text-2xl">
-      Ako vidiš crvenu pozadinu — Tailwind radi!
-    </div>
-  );
+    return (
+      <div className="flex flex-col h-screen max-w-screen w-screen">
+        <NavBar/>
+        <div>
+          <Routes>
+            <Route path = "/" element={<Home />}/>
+            <Route path = "/polls" element={<Polls />}/>
+            <Route path = "/addPoll" element={<AddPoll />}/>
+          </Routes>
+        </div>
+      </div>
+    );
 }
 
-export default App
+export default App;
