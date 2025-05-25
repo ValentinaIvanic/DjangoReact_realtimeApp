@@ -130,3 +130,6 @@ dist
 .pnp.*
 
 __pycache__
+
+#virtual environment
+venv/
