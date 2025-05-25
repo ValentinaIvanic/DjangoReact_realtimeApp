@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import *
 
-admin.site.site_header = "The Poll Mall"
-admin.site.site_title = "Voting Admin Area"
-admin.site.index_title = "Welcome to our Voting Admin Area"
+admin.site.site_header = "Polls"
+admin.site.site_title = "Admin"
+admin.site.index_title = "Bok"
 
 class ChoiceInLine(admin.TabularInline):
     model = Choice

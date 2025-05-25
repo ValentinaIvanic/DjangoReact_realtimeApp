@@ -9,6 +9,9 @@ from .serializers import QuestionSerializer
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
 #list of questions, sorted: new first
 #add question
 class QuestionListCreateAPIView(generics.ListCreateAPIView):
@@ -21,6 +24,7 @@ class QuestionDetailAPIView(generics.RetrieveAPIView):
     serializer_class = QuestionSerializer
 
 #vote
+@method_decorator(csrf_exempt, name='dispatch')
 class VoteAPIView(APIView):
     def post(self, request, pk):
         question = get_object_or_404(Question, pk=pk)
@@ -40,12 +44,11 @@ class VoteAPIView(APIView):
         #WebSocket
         serializer = QuestionSerializer(question)
         channel_layer = get_channel_layer()
-
         async_to_sync(channel_layer.group_send)(
-            f"question_{pk}",  # = consumers.py
+            f"results_{question.id}",
             {
-                "type": "send_vote_update",
-                "data": serializer.data
+                "type": "vote.update",  # maps to vote_update method
+                "question_id": question.id,
             }
         )
 

@@ -4,37 +4,40 @@ import { useParams } from "react-router-dom";
 function Results() {
   const { id } = useParams();
   const [question, setQuestion] = useState(null);
-  const socketRef = useRef(null);
+  const wsRef = useRef(null);
 
-  //pocetni podatci
-  useEffect(() => {
+  const fetchResults = () => {
     fetch(`/api/question/${id}/`)
       .then((res) => res.json())
       .then((data) => setQuestion(data))
       .catch((err) => console.error("Greška pri dohvaćanju rezultata:", err));
-  }, [id]);
+  };
 
-  // WebSocket
   useEffect(() => {
+    fetchResults();
+
+    //WebSocket
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-    const socket = new WebSocket(`${protocol}://${window.location.host}/ws/questions/${id}/`);
-    socketRef.current = socket;
+    const wsUrl = `${protocol}://${window.location.host}/ws/results/${id}/`;
+
+    const socket = new WebSocket(wsUrl);
+    wsRef.current = socket;
 
     socket.onopen = () => {
-      console.log("Websocket connected");
+      console.log("WebSocket connect");
     };
 
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setQuestion(data); 
+      console.log("Websocket_new_message", event.data);
+      fetchResults();  
     };
 
     socket.onerror = (err) => {
-      console.error("WebSocket:", err);
+      console.error("WebSocket greška:", err);
     };
 
     socket.onclose = () => {
-      console.log("WebSocket disconnected");
+      console.log("WebSocket disconnect");
     };
 
     return () => {
