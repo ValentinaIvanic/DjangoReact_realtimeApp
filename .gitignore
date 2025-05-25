@@ -131,5 +131,5 @@ dist
 
 __pycache__
 
-#virtual environment
+#virtual env
 venv/
