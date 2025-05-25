@@ -20,7 +20,6 @@ pip install -r requirements.txt
 3. U folderu `pollApp`, pokretanje migracija:
 
 ```bash
-cd pollApp
 python manage.py migrate
 ```
 
