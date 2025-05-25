@@ -4,6 +4,8 @@ import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Polls from "./pages/Polls"
 import AddPoll from "./pages/AddPoll";
+import VotingPage from "./pages/VotingPage";
+import ResultsPage from "./pages/ResultsPage";
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
             <Route path = "/" element={<Home />}/>
             <Route path = "/polls" element={<Polls />}/>
             <Route path = "/addPoll" element={<AddPoll />}/>
+            <Route path = "/vote/:id" element={<VotingPage />} />
+            <Route path = "/results/:id" element={<ResultsPage />} />
           </Routes>
         </div>
       </div>

@@ -24,7 +24,7 @@ class VoteAPIView(APIView):
         choice_id = request.data.get("choice_id")
 
         try:
-            selected_choice = question.choice_set.get(pk = choice_id)
+            selected_choice = question.choices.get(pk = choice_id)
         except Choice.DoesNotExist:
             return Response(
                 {"error": "Invalid choice ID."},
