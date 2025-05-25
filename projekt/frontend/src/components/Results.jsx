@@ -1,15 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
 function Results() {
   const { id } = useParams();
   const [question, setQuestion] = useState(null);
+  const socketRef = useRef(null);
 
+  //pocetni podatci
   useEffect(() => {
     fetch(`/api/question/${id}/`)
       .then((res) => res.json())
       .then((data) => setQuestion(data))
       .catch((err) => console.error("Greška pri dohvaćanju rezultata:", err));
+  }, [id]);
+
+  // WebSocket
+  useEffect(() => {
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const socket = new WebSocket(`${protocol}://${window.location.host}/ws/questions/${id}/`);
+    socketRef.current = socket;
+
+    socket.onopen = () => {
+      console.log("Websocket connected");
+    };
+
+    socket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setQuestion(data); 
+    };
+
+    socket.onerror = (err) => {
+      console.error("WebSocket:", err);
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket disconnected");
+    };
+
+    return () => {
+      socket.close();
+    };
   }, [id]);
 
   if (!question) return <p>Učitavanje rezultata...</p>;
