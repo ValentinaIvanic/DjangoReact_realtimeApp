@@ -1,10 +1,8 @@
+import FormAddPoll from "../components/FormAddPoll";
+
 function AddPoll() {
     return (
-        <>
-            <div>
-                Dodaj Anketu
-            </div>
-        </>
+        <FormAddPoll/>
     );
 }
 
